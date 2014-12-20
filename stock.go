@@ -2,9 +2,11 @@ package stocks
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -12,7 +14,8 @@ const (
 	timeout = time.Duration(time.Second * 10)
 )
 
-func GetStock(symbol string) StockType {
+// get full stock details into a struct
+func GetQuote(symbol string) (StockType, error) {
 	client := http.Client{
 		Timeout: timeout,
 	}
@@ -20,25 +23,50 @@ func GetStock(symbol string) StockType {
 	url := fmt.Sprintf("http://finance.yahoo.com/webservice/v1/symbols/%s/quote?format=json", symbol)
 	res, err := client.Get(url)
 	if err != nil {
-		fmt.Printf("Error connecting to API %q", err)
+		return StockType{}, errors.New("Stocks cannot access yahoo finance API...")
 	}
 	defer res.Body.Close()
 
 	content, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		fmt.Printf("Error reading json body %q", err)
+		return StockType{}, errors.New("Stocks cannot read json body...")
 	}
 
 	var stock StockType
 
 	err = json.Unmarshal(content, &stock)
 	if err != nil {
-		fmt.Printf("Error reading json body %q", err)
+		return StockType{}, errors.New("Stocks cannot parse json data...")
 	}
 
-	return stock
+	return stock, nil
 }
 
-func (stock StockType) GetSymbol(index int) string {
-	return stock.List.Resources[index].Resource.Fields.Symbol
+// return the stock name
+func (stock StockType) GetName() string {
+	return stock.List.Resources[0].Resource.Fields.Name
+}
+
+// return the stock symbol
+func (stock StockType) GetSymbol() string {
+	return stock.List.Resources[0].Resource.Fields.Symbol
+}
+
+// return the stock price
+func (stock StockType) GetPrice() float64 {
+	price, err := strconv.ParseFloat(stock.List.Resources[0].Resource.Fields.Price, 64)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return price
+}
+
+// just print all details nicely
+func (stock StockType) PrettyPrint() {
+	fmt.Println("-------------------------------")
+	fmt.Println("Name:\t", stock.GetName())
+	fmt.Println("Symbol:\t", stock.GetSymbol())
+	fmt.Println("Price:\t", stock.GetPrice())
+	fmt.Println("-------------------------------")
 }
