@@ -37,7 +37,6 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-	"syscall"
 
 	"github.com/vic3lord/stocks"
 )
@@ -47,7 +46,6 @@ var input string
 func main() {
 	exit := make(chan os.Signal, 1)
 	signal.Notify(exit, os.Interrupt)
-	signal.Notify(exit, syscall.SIGTERM)
 
 	go func() {
 		<-exit
