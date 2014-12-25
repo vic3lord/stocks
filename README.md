@@ -8,6 +8,8 @@ Stocks is a go library to get stock by symbol in from yahoo finance
 $ go get github.com/vic3lord/stocks
 ```
 
+**Ex. 1**
+
 ```go
 package main
 
@@ -26,6 +28,59 @@ func main() {
 }
 ```
 
+**Ex. 2**
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/vic3lord/stocks"
+)
+
+var input string
+
+func main() {
+	exit := make(chan os.Signal, 1)
+	signal.Notify(exit, os.Interrupt)
+	signal.Notify(exit, syscall.SIGTERM)
+
+	go func() {
+		<-exit
+		fmt.Println("Exiting...")
+		os.Exit(0)
+	}()
+
+	Instruct()
+	Prompt()
+	GrabStock()
+	for {
+		stock, err := stocks.GetQuote(input)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Printf("%s stock price is: %f\n", stock.GetName(), stock.GetPrice())
+		Prompt()
+		GrabStock()
+	}
+}
+
+func Prompt() {
+	fmt.Print("> ")
+}
+
+func Instruct() {
+	fmt.Println("Press CTRL-C to exit!\nChoose stock symbol to get quote:")
+}
+
+func GrabStock() {
+	fmt.Scanf("%s", &input)
+}
+```
 ## License
 
 ```
