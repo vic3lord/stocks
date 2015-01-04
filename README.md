@@ -23,7 +23,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Printf("Google stock price is: %f", stock.GetPrice(0))
+	fmt.Printf("Google stock price is: %f", stock.GetPrice())
 	stock.PrettyPrint()
 }
 ```
@@ -35,13 +35,17 @@ package main
 
 import (
 	"fmt"
+	"github.com/vic3lord/stocks"
 	"os"
 	"os/signal"
-
-	"github.com/vic3lord/stocks"
 )
 
 var input string
+
+func GrabStock() {
+	fmt.Print("> ")
+	fmt.Scanf("%s\n", &input)
+}
 
 func main() {
 	exit := make(chan os.Signal, 1)
@@ -53,30 +57,16 @@ func main() {
 		os.Exit(0)
 	}()
 
-	Instruct()
-	Prompt()
-	GrabStock()
+	fmt.Println("Press CTRL-C to exit!\nChoose stock symbol to get quote:")
+
 	for {
+		GrabStock()
 		stock, err := stocks.GetQuote(input)
 		if err != nil {
 			fmt.Println(err)
 		}
 		fmt.Printf("%s stock price is: %f\n", stock.GetName(), stock.GetPrice())
-		Prompt()
-		GrabStock()
 	}
-}
-
-func Prompt() {
-	fmt.Print("> ")
-}
-
-func Instruct() {
-	fmt.Println("Press CTRL-C to exit!\nChoose stock symbol to get quote:")
-}
-
-func GrabStock() {
-	fmt.Scanf("%s", &input)
 }
 ```
 ## License
