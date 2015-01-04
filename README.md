@@ -68,18 +68,6 @@ func main() {
 		fmt.Printf("%s stock price is: %f\n", stock.GetName(), stock.GetPrice())
 	}
 }
-
-func Prompt() {
-	fmt.Print("> ")
-}
-
-func Instruct() {
-	fmt.Println("Press CTRL-C to exit!\nChoose stock symbol to get quote:")
-}
-
-func GrabStock() {
-	fmt.Scanf("%s\n", &input)
-}
 ```
 
 ## License
