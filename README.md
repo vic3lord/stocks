@@ -23,7 +23,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Printf("Google stock price is: %f", stock.GetPrice(0))
+	fmt.Printf("Google stock price is: %f", stock.GetPrice())
 	stock.PrettyPrint()
 }
 ```
@@ -76,7 +76,7 @@ func Instruct() {
 }
 
 func GrabStock() {
-	fmt.Scanf("%s", &input)
+	fmt.Scanf("%s\n", &input)
 }
 ```
 ## License
