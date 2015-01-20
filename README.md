@@ -3,7 +3,7 @@
 Stocks is a go library to get stock by symbol in from yahoo finance  
 
 [![GoDoc](https://godoc.org/github.com/vic3lord/stocks?status.svg)](https://godoc.org/github.com/vic3lord/stocks)
-[![Apache License](http://img.shields.io/badge/license-Apache2.0-blue.svg?style=flat-square)](https://github.com/vic3lord/stocks/blob/master/LICENSE)
+[![Apache License](http://img.shields.io/badge/license-Apache2.0-blue.svg?style=flat)](https://github.com/vic3lord/stocks/blob/master/LICENSE)
 
 ## Example
 
