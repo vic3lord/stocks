@@ -1,12 +1,15 @@
 package stocks
 
-import (
-	"testing"
-)
+import "fmt"
 
-func TestGetSymbol(t *testing.T) {
+func ExampleGetSymbol() {
 	stock, _ := GetQuote("aapl")
-	if stock.GetSymbol() != "AAPL" {
-		t.Error("The stock symbol should be equal to aapl but equals to", stock.GetSymbol())
-	}
+	fmt.Println(stock.GetSymbol())
+	// Output: AAPL
+}
+
+func ExampleGetName() {
+	stock, _ := GetQuote("aapl")
+	fmt.Println(stock.GetName())
+	// Output: Apple Inc.
 }
