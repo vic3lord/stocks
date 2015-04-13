@@ -3,13 +3,19 @@ package stocks
 import "fmt"
 
 func ExampleGetSymbol() {
-	stock, _ := GetQuote("aapl")
+	stock, err := GetQuote("aapl")
+	if err != nil {
+		fmt.Errorf("Error getting quote: %v", err)
+	}
 	fmt.Println(stock.GetSymbol())
 	// Output: AAPL
 }
 
 func ExampleGetName() {
-	stock, _ := GetQuote("aapl")
+	stock, err := GetQuote("aapl")
+	if err != nil {
+		fmt.Errorf("Error getting quote: %v", err)
+	}
 	fmt.Println(stock.GetName())
 	// Output: Apple Inc.
 }
