@@ -11,7 +11,7 @@ Stocks is a go library to get stock by symbol in from yahoo finance
 $ go get github.com/vic3lord/stocks
 ```
 
-**Ex. 1**
+**Example 1**
 
 ```go
 package main
@@ -31,7 +31,7 @@ func main() {
 }
 ```
 
-**Ex. 2**
+**Example 2**
 
 ```go
 package main
@@ -68,7 +68,7 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Printf("%s stock price is: %f\n", stock.GetName(), stock.GetPrice())
+		stock.PrettyPrint()
 	}
 }
 ```
