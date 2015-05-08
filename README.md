@@ -26,7 +26,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Printf("Google stock price is: %f", stock.GetPrice())
 	stock.PrettyPrint()
 }
 ```
