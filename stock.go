@@ -14,33 +14,33 @@ const (
 )
 
 // get full stock details into a struct
-func GetQuote(symbol string) (StockType, error) {
+func GetQuote(symbol string) (Stock, error) {
 	client := http.Client{Timeout: timeout}
 
 	url := fmt.Sprintf("http://finance.yahoo.com/webservice/v1/symbols/%s/quote?format=json", symbol)
 	res, err := client.Get(url)
 	if err != nil {
-		return StockType{}, fmt.Errorf("Stocks cannot access yahoo finance API: %v", err)
+		return Stock{}, fmt.Errorf("Stocks cannot access yahoo finance API: %v", err)
 	}
 	defer res.Body.Close()
 
 	content, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return StockType{}, fmt.Errorf("Stocks cannot read json body: %v", err)
+		return Stock{}, fmt.Errorf("Stocks cannot read json body: %v", err)
 	}
 
-	var stock StockType
+	var stock Stock
 
 	err = json.Unmarshal(content, &stock)
 	if err != nil {
-		return StockType{}, fmt.Errorf("Stocks cannot parse json data: %v", err)
+		return Stock{}, fmt.Errorf("Stocks cannot parse json data: %v", err)
 	}
 
 	return stock, nil
 }
 
 // return the stock name
-func (stock StockType) GetName() string {
+func (stock Stock) GetName() string {
 	return stock.
 		List.
 		Resources[0].
@@ -50,12 +50,12 @@ func (stock StockType) GetName() string {
 }
 
 // return the stock symbol
-func (stock StockType) GetSymbol() string {
+func (stock Stock) GetSymbol() string {
 	return stock.List.Resources[0].Resource.Fields.Symbol
 }
 
 // return the stock price
-func (stock StockType) GetPrice() (float64, error) {
+func (stock Stock) GetPrice() (float64, error) {
 	price, err := strconv.ParseFloat(stock.List.Resources[0].Resource.Fields.Price, 64)
 	if err != nil {
 		return 1.0, fmt.Errorf("Stock price: %v", err)
@@ -65,7 +65,7 @@ func (stock StockType) GetPrice() (float64, error) {
 }
 
 // just print all details nicely
-func (stock StockType) PrettyPrint() {
+func (stock Stock) PrettyPrint() {
 	name := stock.GetName()
 	sym := stock.GetSymbol()
 	price, err := stock.GetPrice()

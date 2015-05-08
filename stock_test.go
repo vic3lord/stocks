@@ -2,7 +2,7 @@ package stocks
 
 import "fmt"
 
-func ExampleGetSymbol() {
+func ExampleStock_GetSymbol() {
 	stock, err := GetQuote("aapl")
 	if err != nil {
 		fmt.Errorf("Error getting quote: %v", err)
@@ -11,7 +11,7 @@ func ExampleGetSymbol() {
 	// Output: AAPL
 }
 
-func ExampleGetName() {
+func ExampleStock_GetName() {
 	stock, err := GetQuote("aapl")
 	if err != nil {
 		fmt.Errorf("Error getting quote: %v", err)

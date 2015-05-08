@@ -1,6 +1,6 @@
 package stocks
 
-type StockType struct {
+type Stock struct {
 	List struct {
 		Resources []Resource
 	}
