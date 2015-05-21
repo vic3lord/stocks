@@ -15,6 +15,7 @@ const (
 
 // get full stock details into a struct
 func GetQuote(symbol string) (Stock, error) {
+	// set http client timeout
 	client := http.Client{Timeout: timeout}
 
 	url := fmt.Sprintf("http://finance.yahoo.com/webservice/v1/symbols/%s/quote?format=json", symbol)
@@ -41,12 +42,7 @@ func GetQuote(symbol string) (Stock, error) {
 
 // return the stock name
 func (stock Stock) GetName() string {
-	return stock.
-		List.
-		Resources[0].
-		Resource.
-		Fields.
-		Name
+	return stock.List.Resources[0].Resource.Fields.Name
 }
 
 // return the stock symbol
@@ -70,10 +66,8 @@ func (stock Stock) PrettyPrint() {
 	sym := stock.GetSymbol()
 	price, err := stock.GetPrice()
 	if err != nil {
-		fmt.Errorf("Error getting price: %v", err)
+		fmt.Printf("Error getting price: %v", err)
 	}
 
-	fmt.Println("-------------------------------")
 	fmt.Printf("Name:\t%s\nSymbol:\t%s\nPrice:\t%f\n", name, sym, price)
-	fmt.Println("-------------------------------")
 }
