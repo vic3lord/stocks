@@ -36,7 +36,6 @@ func GetQuote(symbol string) (Stock, error) {
 	if err != nil {
 		return Stock{}, fmt.Errorf("Stocks cannot parse json data: %v", err)
 	}
-
 	return stock, nil
 }
 
@@ -56,7 +55,6 @@ func (stock Stock) GetPrice() (float64, error) {
 	if err != nil {
 		return 1.0, fmt.Errorf("Stock price: %v", err)
 	}
-
 	return price, nil
 }
 
