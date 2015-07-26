@@ -66,6 +66,5 @@ func (stock Stock) String() string {
 	if err != nil {
 		fmt.Printf("Error getting price: %v", err)
 	}
-
 	return fmt.Sprintf("Name:\t%s\nSymbol:\t%s\nPrice:\t%f\n", stock.GetName(), stock.GetSymbol(), price)
 }
