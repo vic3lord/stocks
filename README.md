@@ -71,7 +71,7 @@ func main() {
 }
 ```
 
-## License
+## ISC License
 
 ```
 Copyright (c) 2015, Or Elimelech <0r3limelech@gmail.com>
