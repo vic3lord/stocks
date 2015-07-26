@@ -26,7 +26,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	stock.PrettyPrint()
+	fmt.Print(stock)
 }
 ```
 
@@ -67,7 +67,7 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		stock.PrettyPrint()
+		fmt.Print(stock)
 	}
 }
 ```

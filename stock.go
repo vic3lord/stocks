@@ -60,14 +60,12 @@ func (stock Stock) GetPrice() (float64, error) {
 	return price, nil
 }
 
-// just print all details nicely
-func (stock Stock) PrettyPrint() {
-	name := stock.GetName()
-	sym := stock.GetSymbol()
+// implement String()
+func (stock Stock) String() string {
 	price, err := stock.GetPrice()
 	if err != nil {
 		fmt.Printf("Error getting price: %v", err)
 	}
 
-	fmt.Printf("Name:\t%s\nSymbol:\t%s\nPrice:\t%f\n", name, sym, price)
+	return fmt.Sprintf("Name:\t%s\nSymbol:\t%s\nPrice:\t%f\n", stock.GetName(), stock.GetSymbol(), price)
 }
