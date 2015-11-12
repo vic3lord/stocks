@@ -5,7 +5,7 @@ import "fmt"
 func ExampleStock_GetSymbol() {
 	stock, err := GetQuote("aapl")
 	if err != nil {
-		fmt.Errorf("Error getting quote: %v", err)
+		fmt.Printf("Error getting quote: %v", err)
 	}
 	fmt.Println(stock.GetSymbol())
 	// Output: AAPL
@@ -14,7 +14,7 @@ func ExampleStock_GetSymbol() {
 func ExampleStock_GetName() {
 	stock, err := GetQuote("aapl")
 	if err != nil {
-		fmt.Errorf("Error getting quote: %v", err)
+		fmt.Printf("Error getting quote: %v", err)
 	}
 	fmt.Println(stock.GetName())
 	// Output: Apple Inc.
