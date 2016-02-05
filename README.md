@@ -1,6 +1,6 @@
 # Stocks
 
-Stocks is a go library to get stock by symbol in from yahoo finance  
+Stocks is a go library to get a stock quote by symbol from yahoo finance  
 
 [![GoDoc](https://godoc.org/github.com/vic3lord/stocks?status.svg)](https://godoc.org/github.com/vic3lord/stocks)
 
