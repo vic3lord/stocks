@@ -5,11 +5,12 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/vic3lord/stocks"
+	"github.com/sgravitz/stocks"
 )
 
 var input string
 
+// GrabStock - read stock symbol from input
 func GrabStock() {
 	fmt.Print("> ")
 	fmt.Scanf("%s\n", &input)

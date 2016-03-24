@@ -84,6 +84,24 @@ func (stock Stock) Get52WeekHigh(index int) (float64, error) {
 	return price, nil
 }
 
+// GetDayLow - return the daily low
+func (stock Stock) GetDayLow(index int) (float64, error) {
+	price, err := strconv.ParseFloat(stock.List.Resources[index].Resource.Fields.DayLow, 64)
+	if err != nil {
+		return 1.0, fmt.Errorf("Daily low: %v", err)
+	}
+	return price, nil
+}
+
+// GetDayHigh - return the daily high
+func (stock Stock) GetDayHigh(index int) (float64, error) {
+	price, err := strconv.ParseFloat(stock.List.Resources[index].Resource.Fields.DayHigh, 64)
+	if err != nil {
+		return 1.0, fmt.Errorf("Daily high: %v", err)
+	}
+	return price, nil
+}
+
 // GetByIndex - return the 52 week high
 func (stock Stock) GetByIndex(index int) string {
 	price, err := stock.GetPrice(index)
@@ -98,7 +116,15 @@ func (stock Stock) GetByIndex(index int) string {
 	if err != nil {
 		fmt.Printf("Error getting 52weekHigh: %v", err)
 	}
-	return fmt.Sprintf("Name:\t%s\nSymbol:\t%s\nPrice:\t%f\nYearLow:\t%f\nYearHigh:\t%f\n", stock.GetName(index), stock.GetSymbol(index), price, yearLow, yearHigh)
+	dayLow, err := stock.GetDayLow(index)
+	if err != nil {
+		fmt.Printf("Error getting daily low: %v", err)
+	}
+	dayHigh, err := stock.GetDayHigh(index)
+	if err != nil {
+		fmt.Printf("Error getting daily high: %v", err)
+	}
+	return fmt.Sprintf("Name:\t%s\nSymbol:\t%s\nPrice:\t%f\nYearLow:\t%f\nYearHigh:\t%f\nDayLow:\t%f\nDayHigh:\t%f\n", stock.GetName(index), stock.GetSymbol(index), price, yearLow, yearHigh, dayLow, dayHigh)
 }
 
 // implement String()
