@@ -58,11 +58,38 @@ func (stock Stock) GetPrice() (float64, error) {
 	return price, nil
 }
 
+// Get52WeekLow - return the 52 week low
+func (stock Stock) Get52WeekLow() (float64, error) {
+	price, err := strconv.ParseFloat(stock.List.Resources[0].Resource.Fields.YearLow, 64)
+	if err != nil {
+		return 1.0, fmt.Errorf("52 week low: %v", err)
+	}
+	return price, nil
+}
+
+// Get52WeekHigh - return the 52 week high
+func (stock Stock) Get52WeekHigh() (float64, error) {
+	price, err := strconv.ParseFloat(stock.List.Resources[0].Resource.Fields.YearHigh, 64)
+	if err != nil {
+		return 1.0, fmt.Errorf("52 week low: %v", err)
+	}
+	return price, nil
+}
+
 // implement String()
 func (stock Stock) String() string {
 	price, err := stock.GetPrice()
 	if err != nil {
 		fmt.Printf("Error getting price: %v", err)
 	}
-	return fmt.Sprintf("Name:\t%s\nSymbol:\t%s\nPrice:\t%f\n", stock.GetName(), stock.GetSymbol(), price)
+	yearLow, err := stock.Get52WeekLow()
+	if err != nil {
+		fmt.Printf("Error getting 52weeklow: %v", err)
+	}
+	yearHigh, err := stock.Get52WeekHigh()
+	if err != nil {
+		fmt.Printf("Error getting 52weekHigh: %v", err)
+	}
+
+	return fmt.Sprintf("Name:\t%s\nSymbol:\t%s\nPrice:\t%f\nYearLow:\t%f\nYearHigh:\t%f\n", stock.GetName(), stock.GetSymbol(), price, yearLow, yearHigh)
 }
