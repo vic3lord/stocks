@@ -13,12 +13,12 @@ const (
 	timeout = time.Duration(time.Second * 10)
 )
 
-// get full stock details into a struct
+// GetQuote - get full stock details into a struct
 func GetQuote(symbol string) (Stock, error) {
 	// set http client timeout
 	client := http.Client{Timeout: timeout}
 
-	url := fmt.Sprintf("http://finance.yahoo.com/webservice/v1/symbols/%s/quote?format=json", symbol)
+	url := fmt.Sprintf("http://finance.yahoo.com/webservice/v1/symbols/%s/quote?format=json&view=detail", symbol)
 	res, err := client.Get(url)
 	if err != nil {
 		return Stock{}, fmt.Errorf("Stocks cannot access yahoo finance API: %v", err)
@@ -39,17 +39,17 @@ func GetQuote(symbol string) (Stock, error) {
 	return stock, nil
 }
 
-// return the stock name
+// GetName - return the stock name
 func (stock Stock) GetName() string {
 	return stock.List.Resources[0].Resource.Fields.Name
 }
 
-// return the stock symbol
+// GetSymbol - return the stock symbol
 func (stock Stock) GetSymbol() string {
 	return stock.List.Resources[0].Resource.Fields.Symbol
 }
 
-// return the stock price
+// GetPrice - return the stock price
 func (stock Stock) GetPrice() (float64, error) {
 	price, err := strconv.ParseFloat(stock.List.Resources[0].Resource.Fields.Price, 64)
 	if err != nil {
