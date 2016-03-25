@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/sgravitz/stocks"
+	"github.com/vic3lord/stocks"
 )
 
 var input string
