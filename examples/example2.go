@@ -10,7 +10,6 @@ import (
 
 var input string
 
-// GrabStock - read stock symbol from input
 func GrabStock() {
 	fmt.Print("> ")
 	fmt.Scanf("%s\n", &input)
