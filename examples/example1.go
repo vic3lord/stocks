@@ -7,12 +7,9 @@ import (
 )
 
 func main() {
-	stock, err := stocks.GetQuote("fb,goog,ge")
+	stock, err := stocks.GetQuote("goog")
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Print(stock)
-	fmt.Print(stock.GetByIndex(1))
-	stock.LoopResults()
-
 }
