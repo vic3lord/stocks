@@ -34,7 +34,7 @@ func TestGetName(t *testing.T) {
 
 		got := s.GetName()
 		if got != tt.name {
-			t.Errorf("GetSymbol(%q) = %s; want %s", tt.in, got, tt.symbol)
+			t.Errorf("GetSymbol(%q) = %s; want %s", tt.in, got, tt.name)
 		}
 	}
 }
