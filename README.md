@@ -74,7 +74,7 @@ func main() {
 ## ISC License
 
 ```
-Copyright (c) 2015, Or Elimelech <0r3limelech@gmail.com>
+Copyright (c) 2015 Or Elimelech <0r3limelech@gmail.com>
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
