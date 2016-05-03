@@ -7,8 +7,8 @@ var testData = []struct {
 	name   string
 	symbol string
 }{
-	{"aapl", "Apple Inc.", "AAPL"},
-	{"goog", "Alphabet Inc.", "GOOG"},
+	{"AAPL", "Apple Inc.", "AAPL"},
+	{"GOOG", "Alphabet Inc.", "GOOG"},
 }
 
 func TestGetSymbol(t *testing.T) {
