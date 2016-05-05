@@ -5,37 +5,46 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
 )
 
-const (
-	timeout  = time.Duration(time.Second * 10)
-	urlStart = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22"
-	urlEnd   = "%22)%0A%09%09&format=json&env=http%3A%2F%2Fdatatables.org%2Falltables.env&callback="
-)
+const timeout = time.Duration(time.Second * 10)
 
 // GetQuote gets latest stock quote for a given symbol
-func GetQuote(symbol string) (Stock, error) {
+func GetQuote(s string) (Stock, error) {
+	var stock Stock
 	client := http.Client{Timeout: timeout}
 
-	url := urlStart + symbol + urlEnd
-	res, err := client.Get(url)
+	api, err := url.Parse("https://query.yahooapis.com/v1/public/yql")
 	if err != nil {
-		return Stock{}, fmt.Errorf("stocks cannot access yahoo finance API: %v", err)
+		return stock, fmt.Errorf("cannot parse yahooapis url: %v", err)
+	}
+
+	// Add query parameters
+	params := url.Values{}
+	params.Add("q", fmt.Sprintf("select * from yahoo.finance.quotes where symbol in (%q)", s))
+	params.Add("format", "json")
+	params.Add("env", "http://datatables.org/alltables.env")
+	params.Add("callback", "")
+	api.RawQuery = params.Encode()
+
+	res, err := client.Get(api.String())
+	if err != nil {
+		return stock, fmt.Errorf("stocks cannot access yahoo finance API: %v", err)
 	}
 	defer res.Body.Close()
 
 	content, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return Stock{}, fmt.Errorf("stocks cannot read JSON body: %v", err)
+		return stock, fmt.Errorf("stocks cannot read JSON body: %v", err)
 	}
 
-	var stock Stock
 	err = json.Unmarshal(content, &stock)
 	if err != nil {
-		return Stock{}, fmt.Errorf("stocks cannot parse JSON data: %v", err)
+		return stock, fmt.Errorf("stocks cannot parse JSON data: %v", err)
 	}
 	return stock, nil
 }
